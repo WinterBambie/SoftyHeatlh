@@ -1,42 +1,165 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Raleway:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+body{
+  font-family:'Inter', sans-serif;
+  background-color:#ffffff;
+  color:#212529;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+:root{
+  --primarycolor:#0A76D8;
+  --primarycolorhover:#906dd3;
+
+  --btnice:#D8EBFA;
+  --btnnicetext:#1b62b3;
+
+  --bordercolor:#e9ecef;
+  --textcolor:#212529;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* ===============================
+   TITLES
+================================= */
+
+h1{
+  font-size:2rem;
+  color:#779df5;
+  text-align:center;
+  margin-top:20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+
+/* ===============================
+   INPUTS
+================================= */
+
+.input-text{
+  border:1px solid var(--bordercolor);
+  font-size:14px;
+  display:block;
+  width:100%;
+  padding:.375rem;
+  font-weight:300;
+  color:var(--textcolor);
+  background-color:#fff;
+  border-radius:4px;
+  outline:none;
+  transition:0.2s;
 }
 
-.card {
-  padding: 2em;
+.input-text:hover{
+  background-color:rgb(250,250,250);
 }
 
-.read-the-docs {
-  color: #888;
+.input-text:focus{
+  border:1px solid var(--primarycolor);
+}
+
+.input-text::placeholder{
+  font-family:'Inter', sans-serif;
+}
+
+
+/* ===============================
+   BUTTON SYSTEM
+================================= */
+
+.btn{
+  cursor:pointer;
+  padding:8px 20px;
+  outline:none;
+  text-decoration:none;
+  font-size:15px;
+  letter-spacing:0.5px;
+  transition:all 0.3s;
+  border-radius:5px;
+  font-family:'Inter', sans-serif;
+  border:none;
+}
+
+.btn:hover{
+  background-color:var(--primarycolorhover);
+  box-shadow:none;
+  transition:all 0.3s;
+}
+
+
+/* PRIMARY BUTTON */
+
+.btn-primary{
+  background-color:var(--primarycolor);
+  border:1px solid var(--primarycolor);
+  color:#fff;
+  box-shadow:0 3px 5px rgba(57,108,240,0.3);
+}
+
+
+/* SOFT BUTTON */
+
+.btn-primary-soft{
+  background-color:var(--btnice);
+  color:var(--btnnicetext);
+  font-weight:500;
+  font-size:16px;
+  border:none;
+}
+
+.btn-primary-soft:hover{
+  background-color:var(--primarycolor);
+  color:#fff;
+  box-shadow:0 3px 5px rgba(57,108,240,0.3);
+}
+
+
+/* BUTTON INSIDE TEXT */
+
+.btn-in-text{
+  font-size:15px;
+  letter-spacing:0.5px;
+}
+
+
+/* ===============================
+   LINKS
+================================= */
+
+.non-style-link:link,
+.non-style-link:visited,
+.non-style-link:hover,
+.non-style-link:active{
+  text-decoration:none;
+  color:rgb(43,43,43);
+}
+
+
+/* ===============================
+   LABEL BUTTON
+================================= */
+
+.btn-label{
+  margin-left:10px;
+  padding:12px 12px;
+  outline:none;
+  text-decoration:none;
+  font-size:15px;
+  letter-spacing:0.5px;
+  transition:all 0.3s;
+  border-radius:5px;
+  background-color:#f0f0f073;
+  border:1px solid rgba(57,108,240,0.1);
+  font-family:'Inter', sans-serif;
+}
+.full-screen-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Ocupa toda la pantalla */
+    width: 100%;
+    background-color: #F6F7FA; /* Color de fondo consistente */
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
 }

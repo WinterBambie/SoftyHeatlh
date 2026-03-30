@@ -1,0 +1,70 @@
+/* Eliminamos el body de aquí */
+
+.container {
+  max-width: 450px; /* Ajustado para que no sea gigante */
+  margin: auto;
+  width: 100%;
+  background-color: white;
+  border: 1px solid rgb(235, 235, 235);
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 3px 5px 0 rgba(240, 240, 240, 0.3);
+  text-align: left;
+}
+
+.signup-card {
+
+  padding: 30px;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+.form-row input{
+    width: 180px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.form-label {
+  color: rgb(44, 44, 44);
+  text-align: left;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.header-text {
+  font-weight: 600;
+  font-size: 30px;
+  letter-spacing: -1px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.sub-text {
+  font-size: 15px;
+  color: rgb(138, 138, 138);
+  text-align: center;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.hover-link1 {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.hover-link1:hover {
+  opacity: 0.8;
+  transition: 0.5s;
+}
+.button-group{
+  display:flex;
+  flex-direction:column; /* uno debajo del otro */
+  gap:1px; /* 👈 separación vertical */
+}
