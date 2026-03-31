@@ -6,7 +6,7 @@ import {
 
 const COLORS = {
   primary:      "#0A76D8",
-  sidebarHover: "#906dd3",
+  sidebarHover: "#1168D9",
   white:        "#ffffff",
 };
 
