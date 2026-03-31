@@ -1,19 +1,20 @@
 import { useState } from "react";
 import {
   createAppointment, updateAppointmentStatus,
-  getAdminPatients, getSchedules, getSessions,
+  getAdminPatients, getSchedules, getSessions, getAvailableSlots,
 } from "../../../services/adminService";
-import { COLORS } from "./../../../styles/COLORS";
+import { COLORS } from "../../../styles/COLORS";
 import AppointmentList from "./AppointmentList";
 import AppointmentForm from "./Appointmentform";
 
-const FORM_INITIAL = { pid: "", scheduleid: "", appointment_date: "" };
+const FORM_INITIAL = { pid: "", scheduleid: "", appointment_date: "", appointment_time: "" };
 
 function AdminAppointments({ appointments, onRefresh }) {
   const [section,    setSection]    = useState("list");
   const [patients,   setPatients]   = useState([]);
   const [schedules,  setSchedules]  = useState([]);
   const [sessions,   setSessions]   = useState([]);
+  const [slots,      setSlots]      = useState([]);
   const [form,       setForm]       = useState(FORM_INITIAL);
   const [loading,    setLoading]    = useState(false);
   const [error,      setError]      = useState("");
@@ -31,29 +32,42 @@ function AdminAppointments({ appointments, onRefresh }) {
     setDataLoaded(true);
   };
 
+  // Llamado cuando se selecciona horario + fecha
+  const handleDateChange = async (scheduleid, date) => {
+    const res = await getAvailableSlots(scheduleid, date);
+    if (res.status === "success") setSlots(res.data);
+    else setSlots([]);
+  };
+
   const handleTabChange = (tab) => {
     setSection(tab); setError(""); setSuccess("");
     if (tab === "new") loadFormData();
   };
 
   const handleSubmit = async () => {
-    if (!form.pid || !form.scheduleid || !form.appointment_date) {
+    if (!form.pid || !form.scheduleid || !form.appointment_date || !form.appointment_time) {
       setError("Todos los campos son obligatorios."); return;
     }
     setError(""); setLoading(true);
     try {
       const fd = new FormData();
-      Object.entries(form).forEach(([k, v]) => fd.append(k, v));
+      fd.append("pid", String(form.pid));
+      fd.append("scheduleid", String(form.scheduleid));
+      fd.append("appointment_date", String(form.appointment_date));
+      fd.append("appointment_time", String(form.appointment_time));
       const res = await createAppointment(fd);
       if (res.status === "success") {
         setSuccess("Cita registrada correctamente.");
         setForm(FORM_INITIAL);
+        setSlots([]);
         onRefresh();
         setSection("list");
       } else {
         setError(res.message || "Error al registrar cita.");
       }
-    } catch { setError("Error al conectar con el servidor."); }
+    } catch (e) {
+      setError(e?.message || "Error de conexión.");
+    }
     finally  { setLoading(false); }
   };
 
@@ -80,8 +94,8 @@ function AdminAppointments({ appointments, onRefresh }) {
       boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
     }}>
       <div style={{ display: "flex", gap: "8px", marginBottom: "1.5rem" }}>
-        {tabBtn("list", "Appointments")}
-        {tabBtn("new",  "+ New appointment")}
+        {tabBtn("list", "Listado de citas")}
+        {tabBtn("new",  "+ Nueva cita")}
       </div>
 
       {error   && <p style={{ color: "#C62828", fontSize: "13px", marginBottom: "1rem" }}>{error}</p>}
@@ -94,6 +108,7 @@ function AdminAppointments({ appointments, onRefresh }) {
         <AppointmentForm
           form={form} setForm={setForm}
           patients={patients} schedules={schedules} sessions={sessions}
+          slots={slots} onDateChange={handleDateChange}
           loading={loading} onSubmit={handleSubmit} />}
     </div>
   );

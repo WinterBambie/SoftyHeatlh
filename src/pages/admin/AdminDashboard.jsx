@@ -59,7 +59,8 @@ const fetchData = async () => {
     dashboard:    "Dashboard",
     patients:     "Pacientes",
     doctors:      "Doctores",
-    appointments: "Citas",
+    appointments: "Citas médicas",
+    agenda:       "Horarios (agenda)",
   };
 
   return (
