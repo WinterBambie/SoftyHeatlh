@@ -11,37 +11,36 @@ function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  if (!email || !password) {
-    setError("Debe ingresar correo y contraseña");
-    return;
-  }
-
-  setError("");
-  setLoading(true);
-
-  try {
-    // USA LA FUNCIÓN QUE IMPORTASTE DE AUTHSERVICE
-    const data = await login(email, password); 
-
-    if (data.status === "success") {
-const role = data.user.role;
-      // Redirección dinámica según el tipo de usuario
-if (role === "admin")        navigate("/admin/AdminDashboard");
-else if (role === "patient") navigate("/patient/PatientDashboard");
-else if (role === "doctor")  navigate("/doctor/DoctorDashboard");
-    } else {
-      setError(data.message || "Error en las credenciales");
+    if (!email || !password) {
+      setError("Debe ingresar correo y contraseña");
+      return;
     }
-  } catch (err) {
-    console.error("Error detallado:", err);
-    setError("Error al conectar con el servidor. Verifica CORS y XAMPP.");
-  } finally {
-    setLoading(false);
-  }
-};
+
+    setError("");
+    setLoading(true);
+
+    try {
+      const data = await login(email, password);
+
+      if (data.status === "success") {
+        const role = data.user.role;
+
+        if (role === "admin") navigate("/admin/AdminDashboard");
+        else if (role === "patient") navigate("/patient/PatientDashboard");
+        else if (role === "doctor") navigate("/doctor/DoctorDashboard");
+      } else {
+        setError(data.message || "Error en las credenciales");
+      }
+    } catch (err) {
+      console.error("Error detallado:", err);
+      setError("Error al conectar con el servidor.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="full-screen-center">
@@ -54,6 +53,7 @@ else if (role === "doctor")  navigate("/doctor/DoctorDashboard");
             <div className="form-group">
               <label>Correo</label>
               <input
+                className="input-text"
                 type="email"
                 placeholder="Correo electrónico"
                 value={email}
@@ -65,6 +65,7 @@ else if (role === "doctor")  navigate("/doctor/DoctorDashboard");
             <div className="form-group">
               <label>Contraseña</label>
               <input
+                className="input-text"
                 type="password"
                 placeholder="Contraseña"
                 value={password}
@@ -73,18 +74,25 @@ else if (role === "doctor")  navigate("/doctor/DoctorDashboard");
               />
             </div>
 
-            {error && <p className="error-text" style={{color: 'red', textAlign: 'center'}}>{error}</p>}
+            {error && <p className="error-text">{error}</p>}
 
-            <button className="login-btn" type="submit" disabled={loading}>
-              {loading ? "Cargando..." : "Login"}
+            <button
+              className="btn btn-primary login-btn"
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? "Cargando..." : "Iniciar sesión"}
             </button>
           </form>
 
-          <p className="sub-text">¿Has olvidado tu correo electrónico?</p>
+          <Link to="/forgot-password" className="non-style-link">
+            <p className="sub-text">¿Olvidaste tu contraseña?</p>
+          </Link>
+
           <p className="sub-text">
-            ¿No tienes una cuenta?{" "}
+            ¿No tienes una cuenta?
             <Link className="hover-link1" to="/signup">
-              Regístrese
+              Regístrate
             </Link>
           </p>
         </div>

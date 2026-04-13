@@ -26,8 +26,6 @@ function AdminDashboard() {
 
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
-  // Reemplaza el fetchData en AdminDashboard.jsx
-
 const fetchData = async () => {
   const token = localStorage.getItem("token");
   const headers = { Authorization: `Bearer ${token}` };
@@ -84,7 +82,7 @@ const fetchData = async () => {
           <p style={{ color: COLORS.textMuted }}>Cargando...</p>
         ) : (
           <>
-            {activeMenu === "dashboard"    && <AdminStats        stats={stats} />}
+            {activeMenu === "dashboard"    && <AdminStats        stats={stats} appointments={appointments} />}
             {activeMenu === "patients"     && <AdminPatients     patients={patients} />}
             {activeMenu === "doctors"      && <AdminDoctors      doctors={doctors} onDoctorCreated={fetchData} />}
             

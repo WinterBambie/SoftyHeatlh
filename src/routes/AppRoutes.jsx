@@ -6,6 +6,7 @@ import DoctorDashboard from "../pages/doctor/DoctorDashboard.jsx";
 import PatientDashboard from "../pages/patient/PatientDashboard.jsx";
 import AdminDashboard from "../pages/admin/AdminDashboard.jsx";
 import CreateAccount from "../pages/create-acount.jsx";
+import ForgotPassword from "../pages/forgot-password.jsx";
 
 
 function AppRoutes() {
@@ -18,6 +19,7 @@ function AppRoutes() {
       <Route path="/admin/AdminDashboard" element={<AdminDashboard />} />
       <Route path="/doctor/DoctorDashboard" element={<DoctorDashboard />} />
       <Route path="/patient/PatientDashboard" element={<PatientDashboard />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
     </Routes>
   );
 }

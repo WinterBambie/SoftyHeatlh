@@ -15,7 +15,7 @@ function usePasswordValidation(password) {
       { test: password.length >= 8,                         msg: "Mínimo 8 caracteres" },
       { test: /[A-Z]/.test(password),                       msg: "Al menos una mayúscula" },
       { test: /[0-9]/.test(password),                       msg: "Al menos un número" },
-      { test: /[!@#$%^&*(),.?":{}|<>]/.test(password),     msg: "Al menos un carácter especial" },
+      { test: /[!@#$%^&*(),.?":{}|<>_/+\-]/.test(password),     msg: "Al menos un carácter especial" },
     ];
     setRules(updated);
     setIsValid(updated.every(r => r.test));
