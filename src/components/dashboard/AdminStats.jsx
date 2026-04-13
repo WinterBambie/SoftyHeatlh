@@ -12,7 +12,7 @@ const COLORS = {
   gray:     "#f5f7fa",
 };
 
-function AdminStats({ stats }) {
+function AdminStats({ stats, appointments = [] }) {
   if (!stats) return <p style={{ color: COLORS.textMuted }}>Cargando...</p>;
 
   const cards = [
@@ -30,6 +30,17 @@ function AdminStats({ stats }) {
     { name: "Este Mes",   total: parseInt(stats.appointments_month) },
     { name: "Reservadas", total: parseInt(stats.appointments_reserved) },
   ];
+
+  const requestedData = Object.entries(
+    appointments.reduce((acc, app) => {
+      const key = app.session || "Sin sesion";
+      acc[key] = (acc[key] || 0) + 1;
+      return acc;
+    }, {})
+  )
+    .map(([name, total]) => ({ name, total }))
+    .sort((a, b) => b.total - a.total)
+    .slice(0, 5);
 
   return (
     <>
@@ -66,22 +77,57 @@ function AdminStats({ stats }) {
         ))}
       </div>
 
-      {/* Gráfica */}
       <div style={{
-        backgroundColor: COLORS.white, borderRadius: "12px",
-        padding: "1.5rem", border: `1px solid ${COLORS.border}`,
-        boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
+        gap: "1rem",
       }}>
-        <h3 style={{ margin: "0 0 1rem", fontSize: "1rem", color: COLORS.text }}>Resumen general</h3>
-        <ResponsiveContainer width="100%" height={280}>
-          <BarChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" stroke={COLORS.border} />
-            <XAxis dataKey="name" tick={{ fontSize: 12, fill: COLORS.textMuted }} />
-            <YAxis tick={{ fontSize: 12, fill: COLORS.textMuted }} />
-            <Tooltip contentStyle={{ borderRadius: "8px", border: `1px solid ${COLORS.border}` }} />
-            <Bar dataKey="total" fill={COLORS.primary} radius={[6, 6, 0, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
+        <div style={{
+          backgroundColor: COLORS.white, borderRadius: "12px",
+          padding: "1.5rem", border: `1px solid ${COLORS.border}`,
+          boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
+        }}>
+          <h3 style={{ margin: "0 0 1rem", fontSize: "1rem", color: COLORS.text }}>Resumen general</h3>
+          <ResponsiveContainer width="100%" height={280}>
+            <BarChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" stroke={COLORS.border} />
+              <XAxis dataKey="name" tick={{ fontSize: 12, fill: COLORS.textMuted }} />
+              <YAxis tick={{ fontSize: 12, fill: COLORS.textMuted }} />
+              <Tooltip contentStyle={{ borderRadius: "8px", border: `1px solid ${COLORS.border}` }} />
+              <Bar dataKey="total" fill={COLORS.primary} radius={[6, 6, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div style={{
+          backgroundColor: COLORS.white, borderRadius: "12px",
+          padding: "1.5rem", border: `1px solid ${COLORS.border}`,
+          boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
+        }}>
+          <h3 style={{ margin: "0 0 1rem", fontSize: "1rem", color: COLORS.text }}>
+            Sesiones mas solicitadas (Top 5)
+          </h3>
+          {requestedData.length === 0 ? (
+            <p style={{ color: COLORS.textMuted, fontSize: "14px", margin: "0.5rem 0 0" }}>
+              Aun no hay citas para graficar.
+            </p>
+          ) : (
+            <ResponsiveContainer width="100%" height={280}>
+              <BarChart data={requestedData} layout="vertical" margin={{ top: 8, right: 16, left: 18, bottom: 8 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke={COLORS.border} />
+                <XAxis type="number" tick={{ fontSize: 12, fill: COLORS.textMuted }} allowDecimals={false} />
+                <YAxis
+                  type="category"
+                  dataKey="name"
+                  width={130}
+                  tick={{ fontSize: 12, fill: COLORS.textMuted }}
+                />
+                <Tooltip contentStyle={{ borderRadius: "8px", border: `1px solid ${COLORS.border}` }} />
+                <Bar dataKey="total" fill={COLORS.btnText} radius={[0, 6, 6, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          )}
+        </div>
       </div>
     </>
   );

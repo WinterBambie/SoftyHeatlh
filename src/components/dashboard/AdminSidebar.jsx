@@ -37,7 +37,7 @@ function Sidebar({ activeMenu, setActiveMenu }) {
       top: 0, height: "100vh"
     }}>
       <div style={{ marginBottom: "2rem", paddingLeft: "0.5rem" }}>
-        <h2 style={{ color: COLORS.white, fontSize: "1.3rem", margin: 0 }}>HealthApi</h2>
+        <h2 style={{ color: COLORS.white, fontSize: "1.3rem", margin: 0 }}>Softyhealth</h2>
         <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "12px", margin: "4px 0 0" }}>
           Panel de administración
         </p>
