@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getSchedules, getSessions, getAvailableSlots, createAppointment } from "../../services/patientService";
+import { getSchedules, getSessions, getAvailableSlots, createAppointment, getPatientAppointments } from "../../services/patientService";
 import { COLORS, inputStyle, labelStyle } from "../../styles/COLORS";
 import { patientCard, primaryBtn } from "./patientStyles";
 

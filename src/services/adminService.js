@@ -3,7 +3,6 @@ const API =
   (import.meta.env.DEV
     ? "/HealthApi/router/api.php"
     : "http://localhost/HealthApi/router/api.php");
-
 const authHeader = () => ({
   Authorization: `Bearer ${localStorage.getItem("token") ?? ""}`,
 });
@@ -40,14 +39,24 @@ const get = async (action, params = "") => {
   }
 };
 
+// ── helpers ───────────────────────────────────────────────────────────────────
+const toForm = (obj) => {
+  const fd = new FormData();
+  Object.entries(obj).forEach(([k, v]) => {
+    if (v !== undefined && v !== null) fd.append(k, String(v));
+  });
+  return fd;
+};
+
 // ── Doctores ──────────────────────────────────────────────────────────────────
-export const getAdminDoctors  = ()         => get("adminDoctors");
-export const createDoctor     = (formData) => post("createDoctor", formData);
-export const updateDoctor     = (formData) => post("updateDoctor", formData);
-export const deleteDoctor     = (formData) => post("deleteDoctor", formData);
+export const getAdminDoctors  = ()            => get("adminDoctors");
+export const createDoctor     = (formData)    => post("createDoctor", formData);
+export const updateDoctor     = (docid, data) => post("updateDoctor", toForm({ docid, ...data }));
+export const deleteDoctor     = (docid)       => post("deleteDoctor", toForm({ docid }));
 
 // ── Pacientes ─────────────────────────────────────────────────────────────────
-export const getAdminPatients = ()         => get("adminPatients");
+export const getAdminPatients = ()            => get("adminPatients");
+export const deletePatient    = (pid)         => post("deletePatient", toForm({ pid }));
 
 // ── Tipos de documento ────────────────────────────────────────────────────────
 export const getDocumentTypes = ()         => get("documentTypes");

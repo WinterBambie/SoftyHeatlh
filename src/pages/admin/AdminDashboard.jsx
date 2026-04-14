@@ -84,7 +84,7 @@ const fetchData = async () => {
           <>
             {activeMenu === "dashboard"    && <AdminStats        stats={stats} appointments={appointments} />}
             {activeMenu === "patients"     && <AdminPatients     patients={patients} />}
-            {activeMenu === "doctors"      && <AdminDoctors      doctors={doctors} onDoctorCreated={fetchData} />}
+            {activeMenu === "doctors"      && <AdminDoctors      doctors={doctors} onRefresh={fetchData} />}
             
             {activeMenu === "appointments" && <AdminAppointments appointments={appointments} onRefresh={fetchData} />}
             {activeMenu === "agenda" && <AdminSchedules />}

@@ -1,36 +1,46 @@
 import axios from "axios";
-
-const API = "http://localhost/HealthApi/router/api.php";
+const API =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV
+    ? "/HealthApi/router/api.php"
+    : "http://localhost/HealthApi/router/api.php");
 
 export const login = async (email, password) => {
   try {
     const response = await axios.post(
       `${API}?action=login`,
       { email, password },
-      { timeout: 5000, headers: { "Content-Type": "application/json" } }
+      { timeout: 8000, headers: { "Content-Type": "application/json" } }
     );
     const data = response.data;
 
     if (data.status === "success") {
-      // ✅ Normalizar id según el rol para que siempre exista user.id
-      const raw = data.user ?? {};
+      // El backend nuevo mete token y user dentro de data.data
+      // El backend original los tiene en data.token / data.user
+      const payload = data.data ?? data;
+      const raw     = payload.user ?? data.user ?? {};
+      const token   = payload.token ?? data.token ?? "";
+
       const user = {
         ...raw,
-        role: data.type,
-        // paciente → pid, doctor → docid, admin → adminid/id
-        id: raw.id ?? raw.pid ?? raw.docid ?? raw.adminid ?? null,
+        role: payload.type ?? data.type,
+        id:   raw.id ?? raw.pid ?? raw.docid ?? null,
       };
-      localStorage.setItem("token", data.token ?? "");
+
+      localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
       return { status: "success", user };
     }
 
-    return { status: "error", message: data.message || "Credenciales incorrectas" };
+    return { status: "error", message: data.message || "Credenciales incorrectas." };
   } catch (error) {
     if (!error.response) {
-      return { status: "server_error", message: "No se pudo conectar al servidor" };
+      return { status: "server_error", message: "No se pudo conectar al servidor." };
     }
-    return { status: "error", message: "Error del servidor" };
+    return {
+      status: "error",
+      message: error.response?.data?.message || "Error del servidor.",
+    };
   }
 };
 
@@ -46,17 +56,25 @@ export const register = async (personalData, accountData) => {
     formData.append("phone",    personalData.phone || "");
     formData.append("email",    accountData.email);
     formData.append("password", accountData.password);
+
     const response = await axios.post(`${API}?action=register`, formData);
     return response.data;
-  } catch {
-    return { status: "error", message: "Error al registrarse" };
+  } catch (error) {
+    return {
+      status: "error",
+      message: error.response?.data?.message || "Error al registrarse.",
+    };
   }
 };
 
 export const getDocumentTypes = async () => {
   try {
     const response = await axios.get(`${API}?action=documentTypes`);
-    return response.data;
+    // Soporta tanto respuesta directa (array) como envuelta en {data: [...]}
+    const res = response.data;
+    if (Array.isArray(res)) return res;
+    if (Array.isArray(res.data)) return res.data;
+    return [];
   } catch {
     return [];
   }

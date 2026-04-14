@@ -61,7 +61,7 @@ function AdminDoctors({ doctors = [], onRefresh }) {
 
   const handleCancel = () => {
     setShowForm(false); setEditing(null);
-    setForm(FORM_INITIAL); setError(""); setSuccess("");
+    setForm(FORM_INITIAL); setError("");
   };
 
   const handleSubmit = async () => {
@@ -74,21 +74,29 @@ function AdminDoctors({ doctors = [], onRefresh }) {
       let res;
       if (editing) {
         const data = { dname: form.dname, demail: form.demail, dphone: form.dphone };
+        console.log("→ updateDoctor llamado con docid:", editing, "data:", data);
         res = await updateDoctor(editing, data);
+        console.log("→ respuesta updateDoctor:", JSON.stringify(res));
       } else {
         if (!form.ddocument || !form.specialty_name) {
           setError("Completa todos los campos obligatorios."); setLoading(false); return;
         }
         const fd = new FormData();
         Object.entries(form).forEach(([k, v]) => fd.append(k, v));
+        console.log("→ createDoctor llamado");
         res = await createDoctor(fd);
+        console.log("→ respuesta createDoctor:", JSON.stringify(res));
       }
+      console.log("→ res.status:", res?.status);
       if (res?.status === "success") {
         setSuccess(editing ? "✓ Doctor actualizado." : "✓ Doctor registrado.");
+          setTimeout(() => setSuccess(""), 3000);
         handleCancel(); onRefresh();
       } else setError(res?.message || "Error al guardar.");
-    } catch { setError("Error de conexión."); }
-    finally  { setLoading(false); }
+    } catch (err) {
+      console.error( err);
+      setError(err?.message || "Error desconocido");
+    } finally { setLoading(false); }
   };
 
   return (
