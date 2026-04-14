@@ -1,6 +1,7 @@
 .navigation {
   background-color: white;
   padding: 14px 24px;
+  font-size: 14px;
 }
 
 .list {
@@ -20,5 +21,47 @@
 }
 
 .list a:hover {
-  color: #38bdf8;
+  color: #0A76D8;
+}
+.link{
+  text-decoration:none;
+  color:#333;
+  font-weight:500;
+  position:relative;
+}
+
+/* línea animada */
+.link::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-5px;
+  width:0%;
+  height:2px;
+  background:#0A76D8;
+  transition:0.3s;
+}
+
+.link:hover::after{
+  width:100%;
+}
+
+/* ACTIVO */
+.active{
+  color:#0A76D8;
+}
+
+.active::after{
+  width:100%;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo {
+  height: 45px;
+  object-fit: contain;
 }
