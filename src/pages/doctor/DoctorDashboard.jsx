@@ -10,6 +10,7 @@ import DoctorToday   from "./DoctorToday";
 import DoctorAgenda  from "./DoctorAgenda";
 import DoctorHistory from "./DoctorHistory";
 import DoctorProfile from "./DoctorProfile";
+import HistoriaClinica from "./HistoriaClinica/historiaclinica";
 
 function DashboardDoctor() {
   const [section,   setSection]   = useState("home");
@@ -60,7 +61,8 @@ function DashboardDoctor() {
     today:   <DoctorToday   appointments={today}   doctorId={doctorId} onRefresh={loadData} />,
     agenda:  <DoctorAgenda  agenda={agenda}         doctorId={doctorId} onRefresh={loadData} />,
     history: <DoctorHistory appointments={history}  doctorId={doctorId} onRefresh={loadData} />,
-    profile: <DoctorProfile user={user} schedules={schedules} onUpdated={() => loadData(true)} />,
+    profile:  <DoctorProfile user={user} schedules={schedules} onUpdated={() => loadData(true)} />,
+    historia: <HistoriaClinica doctorId={doctorId} />,
   };
 
   return (

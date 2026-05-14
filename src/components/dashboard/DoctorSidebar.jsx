@@ -2,13 +2,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Dashboard, CalendarToday, History, Person, Schedule, Menu, Close, Logout } from "@mui/icons-material";
 import { DOCTOR_COLORS } from "./../../pages/doctor/doctorStyles";
-
+import { MedicalServices } from "@mui/icons-material";
 const menuItems = [
   { key: "home",    label: "Dashboard",    icon: <Dashboard fontSize="small" /> },
   { key: "today",   label: "Citas de hoy", icon: <CalendarToday fontSize="small" /> },
   { key: "agenda",  label: "Agenda",       icon: <Schedule fontSize="small" /> },
   { key: "history", label: "Historial",    icon: <History fontSize="small" /> },
   { key: "profile", label: "Mi perfil",    icon: <Person fontSize="small" /> },
+  { key: "historia", label: "Historia Clínica", icon: <MedicalServices fontSize="small" /> },
 ];
 
 function DoctorSidebar({ activeMenu, setActiveMenu, user }) {

@@ -47,8 +47,7 @@ export const requestScheduleChange = (docid, message) =>
   post("doctorRequestSchedule", toForm({ doctor_id: docid, message }));
 
 // ── Perfil ────────────────────────────────────────────────────────────────────
-// ✅ nombre correcto — coincide con api.php case 'doctorUpdateProfile'
-// ✅ exportado como updateDoctorProfile — coincide con DoctorProfile.jsx
+
 export const updateDoctorProfile = (docid, data) =>
   post("doctorUpdateProfile", toForm({ docid, ...data }));
 
