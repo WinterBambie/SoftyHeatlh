@@ -20,28 +20,8 @@ function Navigation() {
           >
             Inicio
           </NavLink>
-        </li>
+        
 
-        <li>
-          <NavLink 
-            to="/about"
-            className={({ isActive }) =>
-              isActive ? `${styles.link} ${styles.active}` : styles.link
-            }
-          >
-            Nosotros
-          </NavLink>
-        </li>
-
-        <li>
-          <NavLink 
-            to="/contact"
-            className={({ isActive }) =>
-              isActive ? `${styles.link} ${styles.active}` : styles.link
-            }
-          >
-            Contactos
-          </NavLink>
         </li>
       </ul>
     </nav>
