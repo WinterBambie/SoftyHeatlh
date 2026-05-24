@@ -4,7 +4,7 @@ import { usePacientesHC, useHistoriaDetalle } from "../../../Hook/useHistoriaCli
 import { generarPDFHistoriaCompleta }         from "./HistoriaClinicaPDF";
 import { alert, hcColors }                    from "../../../components/historiaclinica/historiaClinicaStyles";
 import PatientCard from "../../../components/historiaclinica/PatientCard"
-import HCHeader    from "../../../components/historiaclinica/HcHeader";
+import HCHeader    from "../../../components/historiaclinica/Hcheader";
 import FormRegister from "../../../components/historiaclinica/FormRegister";
 import RegisterCard from "../../../components/historiaclinica/RegisterCard";
 

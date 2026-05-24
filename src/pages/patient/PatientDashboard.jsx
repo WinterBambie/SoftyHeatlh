@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getPatientAppointments, getPatientStats } from "../../services/patientService";
 import PatientSidebar    from "./../../components/dashboard/PatientSidebar";
-import PatientHome      from "./PatientHome";
+import PatientHome      from "./Patienthome";
 import PatientBooking   from "./Patientbooking";
 import PatientHistory   from "./Patienthistory";
 import PatientProfile   from "./Patientprofile";

@@ -5,7 +5,7 @@ import {
   getHistoriaClinica,
   crearRegistroClinico,
   anularRegistro,
-} from "../services/historiaClinicaService";
+} from "../services/historiaclinicaService";
 
 // ── Parsear signos_vitales de string JSON a objeto ────────────────────────────
 const parseRegistros = (registros = []) =>
